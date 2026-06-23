@@ -18,9 +18,9 @@ public class Producto {
     public Producto() {
     }
 
-    boolean giveName(Object name){
-        if (name instanceof String){
-            if (name.toString().length() <= 30){
+    boolean giveName(Object name) {
+        if (name instanceof String) {
+            if (name.toString().length() <= 30) {
                 this.name = (String) name;
                 return true;
             }
@@ -28,7 +28,7 @@ public class Producto {
         return false;
     }
 
-    void createCode(LocalDateTime timeOfCreation){
+    void createCode(LocalDateTime timeOfCreation) {
         String codigoCorrecto = String.valueOf(name.charAt(0)).toUpperCase();
         String fechaHoraRaw = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(timeOfCreation);
         System.out.println(fechaHoraRaw);
@@ -42,8 +42,8 @@ public class Producto {
         this.code = codigoCorrecto;
     }
 
-    boolean giveStock(Object stock){
-        if (stock instanceof Integer){
+    boolean giveStock(Object stock) {
+        if (stock instanceof Integer) {
             if ((Integer) stock >= 0) {
                 this.stock = (Integer) stock;
                 return true;
@@ -52,8 +52,8 @@ public class Producto {
         return false;
     }
 
-    boolean givePrice(Object price){
-        if (price instanceof Integer){
+    boolean givePrice(Object price) {
+        if (price instanceof Integer) {
             if ((Integer) price >= 0) {
                 this.price = (Integer) price;
                 return true;
@@ -62,50 +62,49 @@ public class Producto {
         return false;
     }
 
-    boolean ingresarRUTProveedor(Object rut){
-        if (rut instanceof String) {
-            if (((String) rut).split("-").length == 2) {
-                String primeraParteDelRUT = ((String) rut).split("-")[0].replace(".", "");
-                String digitoVerificador = ((String) rut).split("-")[1];
+    boolean ingresarRUTProveedor(Object rut) {
+        if (rut instanceof String && ((String) rut).split("-").length == 2) {
+            String primeraParteDelRUT = ((String) rut).split("-")[0].replace(".", "");
+            String digitoVerificador = ((String) rut).split("-")[1];
 
-                primeraParteDelRUT = new StringBuilder(primeraParteDelRUT).reverse().toString();
+            primeraParteDelRUT = new StringBuilder(primeraParteDelRUT).reverse().toString();
 
-                int descuento = 0;
-                int suma = 0;
-                try {
-                    for (int i = 0; i < primeraParteDelRUT.length(); i++) {
-                        suma += Integer.parseInt(String.valueOf(primeraParteDelRUT.charAt(i))) * (i + 2 - descuento);
+            int descuento = 0;
+            int suma = 0;
+            try {
+                for (int i = 0; i < primeraParteDelRUT.length(); i++) {
+                    suma += Integer.parseInt(String.valueOf(primeraParteDelRUT.charAt(i))) * (i + 2 - descuento);
 
-                        if ((i + 2) % 7 == 0) {
-                            descuento += 6;
-                        }
+                    if ((i + 2) % 7 == 0) {
+                        descuento += 6;
                     }
-
-                    int digitoObtenido = 11 - (suma % 11);
-                    String digitoObtenidoString;
-                    if (digitoObtenido == 11) {
-                        digitoObtenidoString = "0";
-                    } else if (digitoObtenido == 10) {
-                        digitoObtenidoString = "K";
-                    } else {
-                        digitoObtenidoString = String.valueOf(digitoObtenido);
-                    }
-
-                    if (digitoObtenidoString.equalsIgnoreCase(digitoVerificador)) {
-                        return rutInCSV(rut.toString());
-                    }
-                } catch (Exception e) {
-                    return false;
                 }
+
+                int digitoObtenido = 11 - (suma % 11);
+                String digitoObtenidoString;
+                if (digitoObtenido == 11) {
+                    digitoObtenidoString = "0";
+                } else if (digitoObtenido == 10) {
+                    digitoObtenidoString = "K";
+                } else {
+                    digitoObtenidoString = String.valueOf(digitoObtenido);
+                }
+
+                if (digitoObtenidoString.equalsIgnoreCase(digitoVerificador)) {
+                    return rutInCSV(rut.toString());
+                }
+            } catch (Exception e) {
+                return false;
+
             }
         }
         return false;
     }
 
-    boolean rutInCSV(String rut){
+    boolean rutInCSV(String rut) {
         String csvURL = "proveedores.csv";
         String line;
-        try(BufferedReader br = new BufferedReader(new FileReader(csvURL))){
+        try (BufferedReader br = new BufferedReader(new FileReader(csvURL))) {
             while ((line = br.readLine()) != null) {
                 String RUTFromCSV = line.split(";")[0].trim();
                 if (RUTFromCSV.equals(rut)) {
@@ -113,17 +112,17 @@ public class Producto {
                     return true;
                 }
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             return false;
         }
         return false;
     }
 
-    boolean insertProviderEmail(Object providerEmail){
+    boolean insertProviderEmail(Object providerEmail) {
         if (providerEmail instanceof String) {
             String csvURL = "proveedores.csv";
             String line;
-            try(BufferedReader br = new BufferedReader(new FileReader(csvURL))){
+            try (BufferedReader br = new BufferedReader(new FileReader(csvURL))) {
                 while ((line = br.readLine()) != null) {
                     String emailFromCSV = line.split(";")[2].trim();
                     if (emailFromCSV.equals(providerEmail)) {
@@ -131,7 +130,7 @@ public class Producto {
                         return true;
                     }
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 return false;
             }
         }
