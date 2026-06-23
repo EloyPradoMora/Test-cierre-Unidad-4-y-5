@@ -2,11 +2,10 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +19,7 @@ class DemoApplicationTests {
 
 	@Test
 	void testCodigo(){
-		LocalDateTime fechaFija = LocalDateTime.of(2026, 10, 15, 14, 30, 0);
+		LocalDateTime fechaFija = LocalDateTime.of(2026, Month.OCTOBER, 15, 14, 30, 0);
 		producto.giveName("computador");
 		producto.createCode(fechaFija);
 		String codigoGenerado = producto.getCode();
@@ -81,6 +80,7 @@ class DemoApplicationTests {
 
 	@Test
 	void testRutInvalido(){
+		Assertions.assertFalse(producto.ingresarRUTProveedor("20.645.322-2"));
 		Assertions.assertFalse(producto.ingresarRUTProveedor("20.645.322-3"));
 		Assertions.assertFalse(producto.ingresarRUTProveedor("20645322-3"));
 		Assertions.assertFalse(producto.ingresarRUTProveedor("20.645.3223"));

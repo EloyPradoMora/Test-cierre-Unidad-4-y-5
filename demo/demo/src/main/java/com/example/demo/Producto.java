@@ -92,25 +92,29 @@ public class Producto {
                     }
 
                     if (digitoObtenidoString.equalsIgnoreCase(digitoVerificador)) {
-                        String csvURL = "proveedores.csv";
-                        String line;
-                        try(BufferedReader br = new BufferedReader(new FileReader(csvURL))){
-                            while ((line = br.readLine()) != null) {
-                                String RUTFromCSV = line.split(";")[0].trim();
-                                if (RUTFromCSV.equals(rut.toString())) {
-                                    this.providerRUT = rut.toString();
-                                    return true;
-                                }
-                            }
-                        } catch (IOException e){
-                            System.out.println(e.getMessage());
-                            return false;
-                        }
+                        return rutInCSV(rut.toString());
                     }
                 } catch (Exception e) {
                     return false;
                 }
             }
+        }
+        return false;
+    }
+
+    boolean rutInCSV(String rut){
+        String csvURL = "proveedores.csv";
+        String line;
+        try(BufferedReader br = new BufferedReader(new FileReader(csvURL))){
+            while ((line = br.readLine()) != null) {
+                String RUTFromCSV = line.split(";")[0].trim();
+                if (RUTFromCSV.equals(rut)) {
+                    this.providerRUT = rut;
+                    return true;
+                }
+            }
+        } catch (IOException e){
+            return false;
         }
         return false;
     }
@@ -128,7 +132,6 @@ public class Producto {
                     }
                 }
             } catch (IOException e){
-                System.out.println(e.getMessage());
                 return false;
             }
         }
