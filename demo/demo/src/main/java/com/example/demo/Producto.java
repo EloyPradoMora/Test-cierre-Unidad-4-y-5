@@ -19,11 +19,9 @@ public class Producto {
     }
 
     boolean giveName(Object name) {
-        if (name instanceof String) {
-            if (name.toString().length() <= 30) {
-                this.name = (String) name;
-                return true;
-            }
+        if (name instanceof String && name.toString().length() <= 30) {
+            this.name = (String) name;
+            return true;
         }
         return false;
     }
@@ -43,21 +41,17 @@ public class Producto {
     }
 
     boolean giveStock(Object stock) {
-        if (stock instanceof Integer) {
-            if ((Integer) stock >= 0) {
-                this.stock = (Integer) stock;
-                return true;
-            }
+        if (stock instanceof Integer && (Integer) stock >= 0) {
+            this.stock = (Integer) stock;
+            return true;
         }
         return false;
     }
 
     boolean givePrice(Object price) {
-        if (price instanceof Integer) {
-            if ((Integer) price >= 0) {
-                this.price = (Integer) price;
-                return true;
-            }
+        if (price instanceof Integer && (Integer) price >= 0) {
+            this.price = (Integer) price;
+            return true;
         }
         return false;
     }
