@@ -16,6 +16,7 @@ public class Producto {
     private String providerEmail;
 
     public Producto() {
+        //Vacio porque no se puede ingresar cualquier dato
     }
 
     boolean giveName(Object name) {
@@ -29,7 +30,6 @@ public class Producto {
     void createCode(LocalDateTime timeOfCreation) {
         String codigoCorrecto = String.valueOf(name.charAt(0)).toUpperCase();
         String fechaHoraRaw = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(timeOfCreation);
-        System.out.println(fechaHoraRaw);
         String refinedTime = fechaHoraRaw.split(" ")[0].split("/")[0];
         refinedTime += fechaHoraRaw.split(" ")[0].split("/")[1];
         refinedTime += fechaHoraRaw.split(" ")[0].split("/")[2].substring(2, 4);
@@ -76,14 +76,16 @@ public class Producto {
 
                 int digitoObtenido = 11 - (suma % 11);
                 String digitoObtenidoString;
-                if (digitoObtenido == 11) {
-                    digitoObtenidoString = "0";
-                } else if (digitoObtenido == 10) {
-                    digitoObtenidoString = "K";
-                } else {
-                    digitoObtenidoString = String.valueOf(digitoObtenido);
+                switch (digitoObtenido){
+                    case 11:
+                        digitoObtenidoString = "0";
+                        break;
+                    case 10:
+                        digitoObtenidoString = "K";
+                        break;
+                    default:
+                        digitoObtenidoString = String.valueOf(digitoObtenido);
                 }
-
                 if (digitoObtenidoString.equalsIgnoreCase(digitoVerificador)) {
                     return rutInCSV(rut.toString());
                 }
